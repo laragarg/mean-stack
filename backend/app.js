@@ -1,17 +1,15 @@
 //this file will hold the express app, which is still a nodejs server side app
 const express = require('express');
-const bodyParser = require('body-parser');//to parse the data in the POST request
+const bodyParser = require('body-parser');//to parse the data coming from the POST requests
 
 const app = express();//this will give us an express app
 
-// //app.use is the middleware
+//app.use is the middleware
 
-// //next function is to let the request 
-// //continue it's journey in this file
+// //next function is to let the request continue it's journey in this file
 // app.use((req, res, next) => {
 // 	console.log('First middleware');
-// 	next();//it's important to call next, 
-// 		//if a response is not being sent from the function
+// 	next();
 // });
 
 // app.use((req, res, next) => {
@@ -19,10 +17,10 @@ const app = express();//this will give us an express app
 // });
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false}));
 
-//To remove CORS error, to connect angular 
-// app with node express server
+
+//To remove CORS error, and to connect angular app with node express server
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader(
@@ -37,6 +35,9 @@ app.use((req, res, next) => {
 });
 
 //syntax -> app.method(path, handler), where method is one of the HTTP methods 
+//path is the relative pth in the server
+//handler is a function that express calls when the route is matched
+
 //middleware triggered for post requests
 app.post("/api/posts", (req, res, next) => {
 	const post = req.body;
@@ -49,7 +50,7 @@ app.post("/api/posts", (req, res, next) => {
 //adding posts as arguement will mean that only requests
 //targeting localhost:3000/posts will reach this middleware
 //and all other requests will go into the void 
-app.use('/api/posts', (req, res, next) => {
+app.get('/api/posts', (req, res, next) => {
 	//javascript array
 	//we got two dummy posts, later
 	//these will be coming from a database of course.
@@ -68,7 +69,7 @@ app.use('/api/posts', (req, res, next) => {
 
 	//to return json data
 	return res.status(200).json({
-		message: 'Posts fetched successfully',
+		message: 'Posts fetched successfully', //key: 'value' pair
 		posts: posts
 	});
 

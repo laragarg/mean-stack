@@ -1,19 +1,10 @@
 // //this file is to listen the incoming requests via app.js
-// const http = require('http');
-// const app = require('./backend/app');
-
-// const port = process.env.PORT || 3000;
-// //3000 is the host port if by default host port 
-// //number is not set
-
-// app.set('port', port);
-// const server = http.createServer(app);
-// server.listen(port);
+// // this is the server file
 
 //below code was added directly in lesson 37
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
-const http = require("http");
+const http = require("http"); //http is the module name which provides the createServer function
 
 //normalizePort function is to make sure that when we try to set up
 //a port and especially when we receive it through an environment variable, 
@@ -72,6 +63,6 @@ const server = http.createServer(app);//set up the node server
 server.on("error", onError);
 server.on("listening", onListening);
 
-server.listen(port);//start the server
+server.listen(port);//to set the port number of the server
 
 
